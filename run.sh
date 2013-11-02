@@ -1,3 +1,3 @@
 #! /bin/bash
 
-go build stackwatcher.go types.go && ./stackwatcher
+go build stackwatcher.go types.go notifications.go && ./stackwatcher
