@@ -6,19 +6,27 @@ import (
   "math/rand"
   "os/exec"
   "strconv"
+  "strings"
 )
 
 func notify(msg string, tags []string, url string) {
-  notifyNC(msg, url)
-  // notifyGrowl(msg, url)
+  notifyNC(msg, tags, url)
+  // notifyGrowl(msg, tags, url)
+  notifyTerminal(msg, tags)
 }
 
-func notifyNC(msg string, url string) {
+func notifyTerminal(msg string, tags []string) {
+  fmt.Printf("[%s] %s\n",
+    strings.Join(tags, ", "),
+    msg)
+}
+
+func notifyNC(msg string, tags []string, url string) {
   group := strconv.Itoa(rand.Int())
   cmd := exec.Command("terminal-notifier",
-    "-title", "Greeting",
+    "-title", strings.Join(tags, ", "),
     "-group", group,
-    "-message", fmt.Sprintf("Hello: %s", msg),
+    "-message", msg,
     "-sound", "Tink",
     "-open", url,
   )

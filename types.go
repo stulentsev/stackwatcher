@@ -1,9 +1,8 @@
 package main
 
-import (
-  "fmt"
-)
-
-func SayHello() {
-  fmt.Println("Hello")
+type Question struct {
+  ID int
+  Link string
+  Title string
+  Tags []string
 }
