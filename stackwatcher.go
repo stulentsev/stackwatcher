@@ -3,6 +3,7 @@ package main
 import (
   "bitbucket.org/stulentsev/stackexchange"
   "fmt"
+  "net/http"
 )
 
 
@@ -13,14 +14,23 @@ func main() {
 }
 
 func fetchLatestQuestions() ([]Question, error) {
+  client := stackexchange.Client{
+    Client: http.DefaultClient,
+    AccessToken: "s*b0dcp5xmcO*lDg5IAj6w))",
+    Key: "trkYWI2VTOWLi05pPpIulw((",
+  }
+  
   var questions []stackexchange.Question
-  _, err := stackexchange.Do("/questions", &questions, &stackexchange.Params{
+  wrapper, err := client.Do("/questions", &questions, &stackexchange.Params{
     Site:  stackexchange.StackOverflow,
     Sort:  stackexchange.SortCreationDate,
     Order: "desc",
 
     PageSize: 50,
   })
+  
+  fmt.Printf("Backoff: %v\n", wrapper.Backoff)
+  fmt.Printf("Quota: %d / %d\n", wrapper.QuotaRemaining, wrapper.QuotaMax)
 
   if err != nil {
     fmt.Println(err)

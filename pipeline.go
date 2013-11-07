@@ -68,7 +68,8 @@ func onlyUnseen(in, out chan Question) {
 func filterer(in, out chan Question) {
   defer close(out)
   for question := range in {
-    my_tags := []string{"ruby", "ruby-on-rails", "mysql", "go", "mongodb"}
+    my_tags := []string{"ruby", "ruby-on-rails", "go", "mongodb",
+      "database", "ruby-on-rails-4", "ruby-on-rails-3", "redis"}
 
     if tagsOverlap(my_tags, question.Tags) {
       out <- question
