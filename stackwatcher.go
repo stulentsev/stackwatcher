@@ -20,7 +20,7 @@ func fetchLatestQuestions() ([]Question, error) {
 	}
 
 	var questions []stackexchange.Question
-	wrapper, err := client.Do("/questions", &questions, &stackexchange.Params{
+	_, err := client.Do("/questions", &questions, &stackexchange.Params{
 		Site:  stackexchange.StackOverflow,
 		Sort:  stackexchange.SortCreationDate,
 		Order: "desc",
@@ -28,8 +28,8 @@ func fetchLatestQuestions() ([]Question, error) {
 		PageSize: 50,
 	})
 
-	fmt.Printf("Backoff: %d\n", wrapper.Backoff)
-	fmt.Printf("Quota: %d / %d\n", wrapper.QuotaRemaining, wrapper.QuotaMax)
+  // fmt.Printf("Backoff: %v\n", wrapper.Backoff)
+  // fmt.Printf("Quota: %v / %v\n", wrapper.QuotaRemaining, wrapper.QuotaMax)
 
 	if err != nil {
 		fmt.Println(err)
