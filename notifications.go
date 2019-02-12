@@ -4,14 +4,17 @@ import (
   "fmt"
   "log"
   "math/rand"
+  "os"
   "os/exec"
   "strconv"
   "strings"
 )
 
 func notify(msg string, tags []string, url string) {
-  notifyNC(msg, tags, url)
-  // notifyGrowl(msg, tags, url)
+  if os.Getenv("ENABLE_TERMINAL_NOTIFIER") == "1" {
+    notifyNC(msg, tags, url)
+  }
+
   notifyTerminal(msg, tags)
 }
 

@@ -2,6 +2,8 @@ package main
 
 import (
   "log"
+  "os"
+  "strings"
   "time"
 )
 
@@ -30,7 +32,7 @@ func notifier(in chan Question) {
 func poller(in, out chan Question) {
   for {
     select {
-    case <-time.After(10 * time.Second):
+    case <-time.After(40 * time.Second):
       questions, err := fetchLatestQuestions()
 
       if err != nil {
@@ -63,12 +65,12 @@ func onlyUnseen(in, out chan Question) {
   }
 }
 
+var my_tags = strings.Split(os.Getenv("TAGS"), ",")
+
 func filterer(in, out chan Question) {
   defer close(out)
-  for question := range in {
-    my_tags := []string{"ruby", "ruby-on-rails", "go", "mongodb",
-      "database", "ruby-on-rails-4", "ruby-on-rails-3", "redis"}
 
+  for question := range in {
     if tagsOverlap(my_tags, question.Tags) {
       out <- question
     }
