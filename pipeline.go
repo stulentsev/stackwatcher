@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   "log"
   "time"
 )
@@ -31,8 +30,7 @@ func notifier(in chan Question) {
 func poller(in, out chan Question) {
   for {
     select {
-    case <-time.After(40 * time.Second):
-      fmt.Println("Polling")
+    case <-time.After(10 * time.Second):
       questions, err := fetchLatestQuestions()
 
       if err != nil {

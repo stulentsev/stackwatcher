@@ -4,6 +4,7 @@ import (
 	"bitbucket.org/stulentsev/stackexchange"
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -15,7 +16,7 @@ func main() {
 func fetchLatestQuestions() ([]Question, error) {
 	client := stackexchange.Client{
 		Client:      http.DefaultClient,
-		AccessToken: "s*b0dcp5xmcO*lDg5IAj6w))",
+		AccessToken: os.Getenv("ACCESS_TOKEN"),
 		Key:         "trkYWI2VTOWLi05pPpIulw((",
 	}
 
@@ -27,9 +28,6 @@ func fetchLatestQuestions() ([]Question, error) {
 
 		PageSize: 50,
 	})
-
-  // fmt.Printf("Backoff: %v\n", wrapper.Backoff)
-  // fmt.Printf("Quota: %v / %v\n", wrapper.QuotaRemaining, wrapper.QuotaMax)
 
 	if err != nil {
 		fmt.Println(err)
